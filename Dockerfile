@@ -21,12 +21,12 @@ RUN yum -y install bzip2 bzip2-devel
 #*******************************************
 # Build libcxx without libcxxabi
 
-RUN libcxx="libcxx-3.8.1.src"
-RUN libcxxabi="libcxxabi-3.8.1.src"
+ENV libcxx libcxx-3.8.1.src
+ENV libcxxabi libcxxabi-3.8.1.src
 
-RUN wget "http://llvm.org/releases/3.8.1/$libcxx.tar.xz"
-RUN tar xf "$libcxx.tar.xz"
-RUN cd $libcxx
+RUN wget "http://llvm.org/releases/3.8.1/${libcxx}.tar.xz"
+RUN tar xf "${libcxx}.tar.xz"
+RUN cd ${libcxx}
 # It is not recommended to build libcxx in the source root directory.
 # So, we make a tmp directory.
 RUN mkdir tmp
@@ -45,14 +45,13 @@ RUN rm tmp -rf
 RUN cd ..
 
 # Build libcxxabi with libc++
-#svn co http://llvm.org/svn/llvm-project/libcxxabi/tags/RELEASE_381/final libcxxabi
-RUN wget "http://llvm.org/releases/3.8.1/$libcxxabi.tar.xz"
-RUN tar xf "$libcxxabi.tar.xz"
-RUN cd $libcxxabi
+RUN wget "http://llvm.org/releases/3.8.1/${libcxxabi}.tar.xz"
+RUN tar xf "${libcxxabi}.tar.xz"
+RUN cd ${libcxxabi}
 RUN mkdir tmp
 RUN cd tmp
 # Without -DCMAKE_CXX_FLAGS="-std=c++11", clang++ seems to use c++03, so libcxxabi which seems to be written in C++11 can't be compiled. It could be a CMakeLists.txt bug of libcxxabi.
-RUN cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-std=c++11" -DLIBCXXABI_LIBCXX_INCLUDES=../../$libcxx/include ..
+RUN cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_CXX_FLAGS="-std=c++11" -DLIBCXXABI_LIBCXX_INCLUDES=../../${libcxx}/include ..
 RUN make install
 # clang/clang++ compiled executables seem to not find libc++ in /usr/lib, but /lib64.
 # Use symbolic link to solve this problem.
@@ -60,14 +59,14 @@ RUN ln -s /usr/lib/libc++abi.so.1 /lib64
 RUN cd ../..
 
 # Build libcxx with libcxxabi
-RUN cd $libcxx
+RUN cd ${libcxx}
 RUN mkdir tmp
 RUN cd tmp
 # This time, we want to compile libcxx with libcxxabi, so we have to specify LIBCXX_CXX_ABI=libcxxabi and the path to libcxxabi headers, LIBCXX_LIBCXXABI_INCLUDE_PATHS.
-RUN cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DLIBCXX_CXX_ABI=libcxxabi -DLIBCXX_CXX_ABI_INCLUDE_PATHS=../../$libcxxabi/include ..
+RUN cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DLIBCXX_CXX_ABI=libcxxabi -DLIBCXX_CXX_ABI_INCLUDE_PATHS=../../${libcxxabi}/include ..
 RUN make install
 RUN cd ../..
 
 #clear all
-RUN rm -rf $libcxx $libcxxabi
+RUN rm -rf ${libcxx} ${libcxxabi}
 #*******************************************
