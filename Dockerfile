@@ -8,7 +8,7 @@ RUN yum install -y epel-release
 RUN yum groups mark convert
 RUN yum groupinstall -y 'Development Tools'
 
-RUN yum install -y clang clang-devel llvm-devel cmake3 cmake subversion python-testtools
+RUN yum install -y clang clang-devel llvm-devel cmake3 cmake subversion python-testtools python-pip
 RUN yum install -y qt-creator protobuf-compiler graphviz libxml2-devel libxslt-devel
 RUN yes | pip install checksumdir
 
