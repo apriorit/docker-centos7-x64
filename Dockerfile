@@ -28,20 +28,16 @@ wget "http://llvm.org/releases/3.8.1/$libcxx.tar.xz" && \
 tar xf "$libcxx.tar.xz" && \
 cd $libcxx && \
 pwd && \
- && \
 mkdir $tmp && \
 cd $tmp && \
 pwd && \
 ls -l && \
- && \
 cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ .. && \
 make install && \
- && \
 ln -s /usr/lib/libc++.so.1 /lib64 && \
 cd .. && \
 rm $tmp -rf && \
 cd .. && \
- && \
 wget "http://llvm.org/releases/3.8.1/$libcxxabi.tar.xz" && \
 tar xf "$libcxxabi.tar.xz" && \
 cd $libcxxabi && \
@@ -51,13 +47,11 @@ cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER
 make install && \
 ln -s /usr/lib/libc++abi.so.1 /lib64 && \
 cd ../.. && \
- && \
 cd $libcxx && \
 mkdir $tmp && \
 cd $tmp && \
 cmake3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DLIBCXX_CXX_ABI=libcxxabi -DLIBCXX_CXX_ABI_INCLUDE_PATHS=../../$libcxxabi/include .. && \
 make install && \
 cd ../.. && \
- && \
 rm -rf $libcxx $libcxxabi
 #*******************************************
