@@ -25,13 +25,18 @@ ENV libcxx libcxx-3.8.1.src
 ENV libcxxabi libcxxabi-3.8.1.src
 ENV tmp tmpDirectory
 
+RUN pwd
+
 RUN wget "http://llvm.org/releases/3.8.1/${libcxx}.tar.xz"
 RUN tar xf "${libcxx}.tar.xz"
 RUN cd ${libcxx}
+RUN pwd
 # It is not recommended to build libcxx in the source root directory.
 # So, we make a ${tmp} directory.
 RUN mkdir ${tmp}
 RUN cd ${tmp}
+RUN pwd
+RUN ls -l
 # Specifying CMAKE_BUILD_TYPE to Release shall generate performance optimized code.
 # Please specify the absolute paths to clang and clang++ to CMAKE_C_COMPILER and DCMAKE_CXX_COMPILER,
 # because CMake (ver. 2.8.12 - 3.0.x) has a bug ... See http://www.cmake.org/Bug/view.php?id=15156
