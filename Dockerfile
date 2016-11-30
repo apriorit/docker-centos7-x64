@@ -18,6 +18,7 @@ RUN yum -y install bzip2 bzip2-devel
 RUN wget http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
 
 RUN yum -y groups install "GNOME Desktop"
+RUN startx
 
 COPY resources /srv/resources
 RUN chmod +x ./qt-unified-linux-x64-online.run
