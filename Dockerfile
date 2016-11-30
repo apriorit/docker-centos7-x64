@@ -15,6 +15,17 @@ RUN yes | pip install checksumdir
 #bzip2 need for bulding of boost iostream library
 RUN yum -y install bzip2 bzip2-devel
 
+RUN wget http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
+
+RUN yum -y groups install "GNOME Desktop"
+
+COPY resources /srv/resources
+RUN chmod +x ./qt-unified-linux-x64-online.run
+RUN ./qt-unified-linux-x64-online.run --script /srv/resources/qt-installer-noninteractive.qs
+
+RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-toolchains --detect 
+RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt/5.7/gcc_64/bin/qmake' QtProfile
+RUN /opt/Qt/Tools/QtCreator/bin/qbs config profiles.QtProfile.baseProfile clang
 
 #building and installing of clang c++ library for better c++11 support
 # http://stackoverflow.com/questions/25840088/how-to-build-libcxx-and-libcxxabi-by-clang-on-centos-7/25840107#25840107
