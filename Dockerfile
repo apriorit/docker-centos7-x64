@@ -1,5 +1,7 @@
 FROM centos:7
 MAINTAINER petrov <petrov@apriorit.com>
+
+USER root
 RUN yum -y update && yum clean all
 
 #Install custom packages
