@@ -9,12 +9,17 @@ RUN yum install -y epel-release
 RUN yum groups mark convert
 RUN yum groupinstall -y 'Development Tools'
 
-RUN yum install -y clang clang-devel llvm-devel cmake3 cmake subversion python-testtools python-pip wget
+RUN yum install -y clang clang-devel llvm-devel cmake3 cmake python-testtools python-pip wget
 RUN yum install -y qt-creator protobuf-compiler graphviz libxml2-devel libxslt-devel
 RUN yes | pip install checksumdir
 
 #bzip2 need for bulding of boost iostream library
 RUN yum -y install bzip2 bzip2-devel
+
+RUN echo -e "[WANdiscoSVN]\nname=WANdisco SVN Repo 1.9\nenabled=1\nbaseurl=http://opensource.wandisco.com/centos/$releasever/svn-1.8/RPMS/$basearch/\ngpgcheck=1\ > /etc/yum.repos.d/wandisco-svn.repo
+
+RUN clean all
+RUN yum install -y subversion
 
 RUN wget -q http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
 
