@@ -22,7 +22,7 @@ COPY resources /srv/resources
 RUN chmod +x ./qt-opensource-linux-x64-5.7.0-beta.run
 RUN ./qt-opensource-linux-x64-5.7.0-beta.run --script /srv/resources/qt-installer-noninteractive.qs -platform minimal
 
-RUN ld /opt
+RUN ls /opt
 
 RUN /opt/Qt5.7.0/Tools/QtCreator/bin/qbs setup-toolchains --detect 
 RUN /opt/Qt5.7.0/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt5.7.0/5.7/gcc_64/bin/qmake' QtProfile
