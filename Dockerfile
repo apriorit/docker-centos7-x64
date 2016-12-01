@@ -16,12 +16,14 @@ RUN yes | pip install checksumdir
 #bzip2 need for bulding of boost iostream library
 RUN yum -y install bzip2 bzip2-devel
 
+#install newer subversion
 RUN echo -e "[WandiscoSVN]\nname=Wandisco SVN Repo\nbaseurl=http://opensource.wandisco.com/centos/7/svn-1.8/RPMS/$basearch/\nenabled=1\ngpgcheck=0" > /etc/yum.repos.d/wandisco-svn.repo
 
+RUN yum remove -y subversion*
 RUN yum clean all
 RUN yum install -y subversion
 
-
+#install qt
 RUN wget -q http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
 
 COPY resources /srv/resources
