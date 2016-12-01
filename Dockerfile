@@ -16,7 +16,7 @@ RUN yes | pip install checksumdir
 #bzip2 need for bulding of boost iostream library
 RUN yum -y install bzip2 bzip2-devel
 
-RUN echo -e "[WANdiscoSVN]\nname=WANdisco SVN Repo 1.9\nenabled=1\nbaseurl=http://opensource.wandisco.com/centos/$releasever/svn-1.8/RPMS/$basearch/\ngpgcheck=1" > /etc/yum.repos.d/wandisco-svn.repo
+RUN echo -e "[WandiscoSVN]\nname=Wandisco SVN Repo\nbaseurl=http://opensource.wandisco.com/centos/$releasever/svn-1.8/RPMS/$basearch/\nenabled=1\ngpgcheck=0" > /etc/yum.repos.d/wandisco-svn.repo
 
 RUN yum clean all
 RUN yum install -y subversion
