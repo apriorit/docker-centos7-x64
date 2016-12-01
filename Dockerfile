@@ -22,9 +22,11 @@ COPY resources /srv/resources
 RUN chmod +x ./qt-opensource-linux-x64-5.7.0-beta.run
 RUN ./qt-opensource-linux-x64-5.7.0-beta.run --script /srv/resources/qt-installer-noninteractive.qs -platform minimal
 
-RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-toolchains --detect 
-RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt/5.7/gcc_64/bin/qmake' QtProfile
-RUN /opt/Qt/Tools/QtCreator/bin/qbs config profiles.QtProfile.baseProfile clang
+RUN ld /opt
+
+RUN /opt/Qt5.7.0/Tools/QtCreator/bin/qbs setup-toolchains --detect 
+RUN /opt/Qt5.7.0/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt5.7.0/5.7/gcc_64/bin/qmake' QtProfile
+RUN /opt/Qt5.7.0/Tools/QtCreator/bin/qbs config profiles.QtProfile.baseProfile clang
 
 #building and installing of clang c++ library for better c++11 support
 # http://stackoverflow.com/questions/25840088/how-to-build-libcxx-and-libcxxabi-by-clang-on-centos-7/25840107#25840107
