@@ -1,7 +1,6 @@
 FROM centos:7
 MAINTAINER petrov <petrov@apriorit.com>
 
-USER root
 RUN yum -y update && yum clean all
 
 #Install custom packages
@@ -17,14 +16,11 @@ RUN yes | pip install checksumdir
 #bzip2 need for bulding of boost iostream library
 RUN yum -y install bzip2 bzip2-devel
 
-RUN wget http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
-
-RUN yum -y groups install "GNOME Desktop"
-RUN startx
+RUN wget -q http://download.qt.io/development_releases/qt/5.7/5.7.0-beta/qt-opensource-linux-x64-5.7.0-beta.run
 
 COPY resources /srv/resources
-RUN chmod +x ./qt-unified-linux-x64-online.run
-RUN ./qt-unified-linux-x64-online.run --script /srv/resources/qt-installer-noninteractive.qs
+RUN chmod +x ./qt-opensource-linux-x64-5.7.0-beta.run
+RUN ./qt-opensource-linux-x64-5.7.0-beta.run --script /srv/resources/qt-installer-noninteractive.qs -platform minimal
 
 RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-toolchains --detect 
 RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt/5.7/gcc_64/bin/qmake' QtProfile
