@@ -17,24 +17,10 @@ RUN yes | pip install checksumdir
 RUN yum -y install bzip2 bzip2-devel
 
 #install newer subversion
-RUN echo -e "[WandiscoSVN]\nname=Wandisco SVN Repo\nbaseurl=http://opensource.wandisco.com/centos/7/svn-1.8/RPMS/$basearch/\nenabled=1\ngpgcheck=0" > /etc/yum.repos.d/wandisco-svn.repo
-
+RUN echo -e "[WandiscoSVN]\nname=Wandisco SVN Repo\nbaseurl=http://opensource.wandisco.com/centos/7/svn-1.8/RPMS/$basearch\nenabled=1\ngpgcheck=0" > /etc/yum.repos.d/wandisco-svn.repo
 RUN yum remove -y subversion*
 RUN yum clean all
 RUN yum install -y subversion
-
-#install qt
-RUN wget -q http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
-
-COPY resources /srv/resources
-RUN chmod +x ./qt-unified-linux-x64-online.run
-RUN ./qt-unified-linux-x64-online.run --script /srv/resources/qt-installer-noninteractive.qs -platform minimal
-
-RUN ls /opt
-
-RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-toolchains --detect 
-RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt/5.7/gcc_64/bin/qmake' QtProfile
-RUN /opt/Qt/Tools/QtCreator/bin/qbs config profiles.QtProfile.baseProfile clang
 
 #building and installing of clang c++ library for better c++11 support
 # http://stackoverflow.com/questions/25840088/how-to-build-libcxx-and-libcxxabi-by-clang-on-centos-7/25840107#25840107
@@ -75,3 +61,23 @@ make install && \
 cd ../.. && \
 rm -rf $libcxx $libcxxabi
 #*******************************************
+
+#install newer clang
+RUN echo -e "[warning:fedora]\nname=fedora\nmirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=fedora-24&arch=x86_64\nenabled=1\ngpgcheck=0" > /etc/yum.repos.d/Fedora-Core24.repo
+
+RUN yum -y install clang clang-devel llvm-devel --enablerepo=warning:fedora
+
+#install conan
+RUN pip install conan
+
+#install qt
+RUN wget -q http://download.qt.io/archive/qt/5.7/5.7.1/qt-opensource-linux-x64-5.7.1.run
+
+COPY resources /srv/resources
+RUN chmod +x ./qt-opensource-linux-x64-5.7.1.run
+RUN ./qt-opensource-linux-x64-5.7.1.run --script /srv/resources/qt-installer-noninteractive.qs -platform minimal
+
+RUN ls /opt
+RUN /opt/Qt5.7.1/Tools/QtCreator/bin/qbs setup-toolchains --detect 
+RUN /opt/Qt5.7.1/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt5.7.1/5.7/gcc_64/bin/qmake' QtProfile
+RUN /opt/Qt5.7.1/Tools/QtCreator/bin/qbs config profiles.QtProfile.baseProfile clang
