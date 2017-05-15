@@ -24,17 +24,17 @@ RUN yum clean all
 RUN yum install -y subversion
 
 #install qt
-RUN wget -q http://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
+RUN wget -q http://download.qt.io/archive/qt/5.7/5.7.1/qt-opensource-linux-x64-5.7.1.run
 
 COPY resources /srv/resources
-RUN chmod +x ./qt-unified-linux-x64-online.run
-RUN ./qt-unified-linux-x64-online.run --script /srv/resources/qt-installer-noninteractive.qs -platform minimal
+RUN chmod +x ./qt-opensource-linux-x64-5.7.1.run
+RUN ./qt-opensource-linux-x64-5.7.1.run --script /srv/resources/qt-installer-noninteractive.qs -platform minimal
 
 RUN ls /opt
 
-RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-toolchains --detect 
-RUN /opt/Qt/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt/5.7/gcc_64/bin/qmake' QtProfile
-RUN /opt/Qt/Tools/QtCreator/bin/qbs config profiles.QtProfile.baseProfile clang
+RUN /opt/Qt5.7.1/Tools/QtCreator/bin/qbs setup-toolchains --detect 
+RUN /opt/Qt5.7.1/Tools/QtCreator/bin/qbs setup-qt '/opt/Qt5.7.1/5.7/gcc_64/bin/qmake' QtProfile
+RUN /opt/Qt5.7.1/Tools/QtCreator/bin/qbs config profiles.QtProfile.baseProfile clang
 
 #building and installing of clang c++ library for better c++11 support
 # http://stackoverflow.com/questions/25840088/how-to-build-libcxx-and-libcxxabi-by-clang-on-centos-7/25840107#25840107
