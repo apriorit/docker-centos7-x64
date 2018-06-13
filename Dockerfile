@@ -10,5 +10,8 @@ RUN yum install -y https://rpmfind.net/linux/centos/7.4.1708/updates/x86_64/Pack
 RUN yum install -y https://rpmfind.net/linux/centos/7.4.1708/updates/x86_64/Packages/kernel-3.10.0-693.21.1.el7.x86_64.rpm
 RUN yum install -y https://rpmfind.net/linux/centos/7.4.1708/updates/x86_64/Packages/kernel-devel-3.10.0-693.2.2.el7.x86_64.rpm
 RUN yum install -y https://rpmfind.net/linux/centos/7.4.1708/updates/x86_64/Packages/kernel-devel-3.10.0-693.21.1.el7.x86_64.rpm
+RUN yum install -y https://rpmfind.net/linux/centos/7.5.1804/updates/x86_64/Packages/kernel-3.10.0-862.3.2.el7.x86_64.rpm
+RUN yum install -y https://rpmfind.net/linux/centos/7.5.1804/updates/x86_64/Packages/kernel-devel-3.10.0-862.3.2.el7.x86_64.rpm
+RUN yum install -y kernel kernel-devel
 
 #*******************************************
