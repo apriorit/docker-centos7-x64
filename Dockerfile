@@ -25,10 +25,10 @@ RUN ACCEPT_EULA=Y yum -y install msodbcsql17
 
 RUN ACCEPT_EULA=Y yum -y install mssql-tools
 
-RUN yum -y install unixODBC-devel
-
 #Install postgres odbc and replace relative path by full path to odbc driver (fix not found odbc driver error)
-RUN yum install -y postgresql-odbc && sed -i 's/psqlodbcw.so/\/usr\/lib64\/psqlodbcw.so/g' /etc/odbcinst.ini
+RUN yum install -y postgresql-odbc
+
+RUN yum -y install unixODBC-devel
 
 #Build POCO library
 RUN cd /tmp && git clone -b "poco-1.9.0" https://github.com/pocoproject/poco.git && cd poco/ && mkdir cmake-build && cd cmake-build && \
