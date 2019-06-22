@@ -18,9 +18,9 @@ RUN cd /tmp && wget https://github.com/Kitware/CMake/releases/download/v3.14.5/c
 
 RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos.d/mssql-release.repo
 
-RUN yum -y install unixODBC-devel
-
 #Install MS ODBC Driver and Libraries
+
+RUN yum -y install unixODBC-devel
 
 RUN ACCEPT_EULA=Y yum -y install msodbcsql17
 
@@ -28,6 +28,10 @@ RUN ACCEPT_EULA=Y yum -y install mssql-tools
 
 #Install postgres odbc and replace relative path by full path to odbc driver (fix not found odbc driver error)
 RUN yum install -y postgresql-odbc
+
+COPY resources /srv/resources
+
+RUN odbcinst -i -d -f /srv/resources/postgresql.ini
 
 #Build POCO library
 RUN cd /tmp && git clone -b "poco-1.9.0" https://github.com/pocoproject/poco.git && cd poco/ && mkdir cmake-build && cd cmake-build && \
