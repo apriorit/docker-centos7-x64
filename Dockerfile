@@ -27,7 +27,7 @@ RUN ACCEPT_EULA=Y yum -y install msodbcsql17
 RUN ACCEPT_EULA=Y yum -y install mssql-tools
 
 #Install postgres odbc and replace relative path by full path to odbc driver (fix not found odbc driver error)
-RUN yum install -y postgresql-odbc
+RUN yum install -y postgresql-odbc postgresql-contrib 
 
 COPY resources /srv/resources
 
