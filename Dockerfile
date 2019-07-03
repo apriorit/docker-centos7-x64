@@ -9,7 +9,7 @@ RUN yum install -y epel-release
 RUN yum groups mark convert
 RUN yum groupinstall -y 'Development Tools'
 
-RUN yum install -y git subversion wget vim-common boost-devel libicu-devel zlib-devel openssl-devel libuuid-devel cryptopp-devel redhat-lsb-core rpmrebuild
+RUN yum install -y git subversion wget vim-common boost-devel libicu-devel zlib-devel openssl-devel libuuid-devel cryptopp-devel redhat-lsb-core rpmrebuild gtest-devel
 
 RUN yum clean all
 
