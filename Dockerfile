@@ -38,7 +38,8 @@ RUN cd /tmp && git clone -b "poco-1.9.0" https://github.com/pocoproject/poco.git
 sed -i '/project(Poco)/a SET(CMAKE_INSTALL_RPATH "\$ORIGIN")' ../CMakeLists.txt && cmake .. -DCMAKE_BUILD_TYPE=RELEASE && cmake --build . && \
 make DESTDIR=/opt/apriorit-poco all install
  
+# grpc depends
+RUN apt-get -y install build-essential autoconf libtool pkg-config libgflags-dev libgtest-dev clang libc++-dev
 
-
-
-
+# grpc
+RUN cd /tmp && git clone -b "v1.13.x" https://github.com/grpc/grpc && cd grpc && git submodule update --init && make && make install && cd third_party/protobuf && make install
