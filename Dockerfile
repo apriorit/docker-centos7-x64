@@ -43,6 +43,11 @@ RUN cd /tmp && git clone -b "v1.13.x" https://github.com/grpc/grpc && cd grpc &&
 
 #golang
 RUN yum install -y golang
-
+ENV GOSRC=$GOPATH/src
+RUN mkdir -p $GOSRC/github.com/golang && cd $GOSRC/github.com/golang && git clone https://github.com/golang/protobuf && cd protobuf && git checkout tags/v1.2.0 -b v1.2.0
+RUN mkdir -p $GOSRC/github.com/grpc-ecosystem && cd $GOSRC/github.com/grpc-ecosystem && git clone https://github.com/grpc-ecosystem/grpc-gateway && cd grpc-gateway && git checkout tags/v1.11.2 -b v1.11.2
+RUN cd $GOSRC/github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway && go install
+RUN cd $GOSRC/github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger && go install
+RUN cd $GOSRC/github.com/golang/protobuf/protoc-gen-go && go install
 
 
