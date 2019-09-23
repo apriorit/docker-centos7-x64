@@ -43,7 +43,8 @@ RUN cd /tmp && git clone -b "v1.13.x" https://github.com/grpc/grpc && cd grpc &&
 
 #golang
 RUN cd /tmp && mkdir -p golang && cd golang && wget https://dl.google.com/go/go1.13.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz && cd /tmp && rm -rf ./golang
-ENV PATH=\$PATH:/usr/local/go/bin
+ENV GOBIN=/usr/local/bin
+ENV PATH="${PATH}:${GOBIN}"
 ENV GOPATH=~/go
 ENV GOSRC=$GOPATH/src
 RUN mkdir -p $GOSRC/github.com/golang && cd $GOSRC/github.com/golang && git clone https://github.com/golang/protobuf && cd protobuf && git checkout tags/v1.2.0 -b v1.2.0
