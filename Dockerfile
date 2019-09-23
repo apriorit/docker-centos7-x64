@@ -42,7 +42,9 @@ make DESTDIR=/opt/apriorit-poco all install
 RUN cd /tmp && git clone -b "v1.13.x" https://github.com/grpc/grpc && cd grpc && git submodule update --init && make && make install && cd third_party/protobuf && make install
 
 #golang
-RUN yum install -y golang
+RUN cd /tmp && mkdir -p golang && cd golang && wget https://dl.google.com/go/go1.13.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz && cd /tmp && rm -rf ./golang
+RUN echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.bash_profile
+RUN echo "export GOPATH=~/go" >> ~/.bash_profile 
 ENV GOSRC=$GOPATH/src
 RUN mkdir -p $GOSRC/github.com/golang && cd $GOSRC/github.com/golang && git clone https://github.com/golang/protobuf && cd protobuf && git checkout tags/v1.2.0 -b v1.2.0
 RUN mkdir -p $GOSRC/github.com/grpc-ecosystem && cd $GOSRC/github.com/grpc-ecosystem && git clone https://github.com/grpc-ecosystem/grpc-gateway && cd grpc-gateway && git checkout tags/v1.11.2 -b v1.11.2
