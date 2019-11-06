@@ -47,6 +47,7 @@ RUN patchelf --set-rpath '\$ORIGIN' /usr/local/lib/libgrpc++_reflection.so.1.13.
 RUN patchelf --set-rpath '\$ORIGIN' /usr/local/lib/libgrpc++.so.1.13.1
 RUN patchelf --set-rpath '\$ORIGIN' /usr/local/lib/libgrpc.so.6.0.0
 RUN patchelf --set-rpath '\$ORIGIN' /usr/local/lib/libgrpc++_unsecure.so.1.13.1
+RUN patchelf --set-rpath '\$ORIGIN' /usr/local/lib/libgrpc_unsecure.so.6.0.0
 
 #golang
 RUN cd /tmp && mkdir -p golang && cd golang && wget https://dl.google.com/go/go1.13.linux-amd64.tar.gz && tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz && cd /tmp && rm -rf ./golang
