@@ -18,6 +18,9 @@ RUN cd /tmp && wget https://github.com/Kitware/CMake/releases/download/v3.14.5/c
 
 RUN curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos.d/mssql-release.repo
 
+#Build&Install boost 1.54
+RUN cd /tmp && wget http://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.gz && tar zxvf boost_1_54_0.tar.gz && cd boost_1_54_0 && ./bootstrap.sh --with-icu --with-libraries=system,filesystem,thread,regex,locale,chrono,program_options,date_time,serialization --prefix=/opt/boost_1_54_0 && ./b2 && ./b2 install && cd -
+
 #Install MS ODBC Driver and Libraries
 
 RUN yum -y install unixODBC-devel
